@@ -3,6 +3,7 @@ let switchDirectionWindowWidth = 900;
 let animationLength = 200;
 
 function stackNote(href, level) {
+  console.log(`stackNote href ${href} at level ${level}`);
   level = Number(level) || pages.length;
   href = URI(href);
   uri = URI(window.location);
@@ -15,6 +16,7 @@ function stackNote(href, level) {
 }
 
 function unstackNotes(level) {
+  console.log(`unstackNote at level ${level}`);
   let container = document.querySelector(".grid");
   let children = Array.prototype.slice.call(container.children);
 
@@ -31,7 +33,7 @@ function updateLinkStatuses() {
     console.log(`updateLinkStatuses - link: ${link}`);
 
     if (pages.indexOf(link.getAttribute("href")) > -1) {
-      if(!link.id.contains('logo-and-title'))link.classList.add("active");
+      link.classList.add("active");
     } else {
       link.classList.remove("active");
     }
@@ -74,6 +76,7 @@ function insertNote(href, text, level) {
  * @param {number} level 
  */
 function fetchNote(href, level) {
+  console.log(`fetchNote ${href} at level ${level}`);
   if (pages.indexOf(href) > -1) return;
   level = Number(level) || pages.length;
 
@@ -86,15 +89,17 @@ function fetchNote(href, level) {
 }
 
 function initializePage(page, level) {
+  console.log(`initializePage ${JSON.stringify(page, null, 2)} at level ${level}`);
+
   level = level || pages.length;
 
-  links = Array.prototype.slice.call(page.querySelectorAll("a"));
+  links = Array.prototype.slice.call(page.querySelectorAll("a")) || [];
+  updateLinkStatuses();
 
   links.forEach(async function (element) {
     var rawHref = element.getAttribute("href");
     element.dataset.level = level;
     var ignoreLocalPaths = ['/search/'];
-
 
     if (
       rawHref &&
@@ -107,12 +112,14 @@ function initializePage(page, level) {
           rawHref.includes(".pdf") ||
           rawHref.includes(".svg") ||
           // Ignore certain paths from opening on a side panel
-          ignoreLocalPaths.reduce((acc, path) => acc || rawHref.includes(path), false) 
+          ignoreLocalPaths.reduce((acc, path) => acc || rawHref.includes(path), false)
         )
       )
     ) {
       var prefetchLink = element.href;
       async function myFetch() {
+        console.log(`myFetch ${prefetchLink}`);
+        
         let response = await fetch(prefetchLink);
         let text = await response.text();
         let ct = await response.headers.get("content-type");
