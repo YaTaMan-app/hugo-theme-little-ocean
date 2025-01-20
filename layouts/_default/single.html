@@ -4,7 +4,10 @@
     <div class="page" data-level="1">
       <div class="content">
         <h1>{{ .Title }}</h1>
-        {{ .Content }}
+        {{ .Content | 
+          replaceRE `\[\[([^|\]]+)\|([^|\]]+)\]\]` `<a href='/$1/'>$2</a>` | 
+          replaceRE `\[\[([^\]]+)\]\]` `<a href='/$1/'>$1</a>` | 
+          safeHTML }}
       </div>
       {{ partial "backlinks.html" . }}
       </div>

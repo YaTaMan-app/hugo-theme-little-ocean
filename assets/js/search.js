@@ -11,7 +11,7 @@ function displayResults(results, store) {
     }
     searchResults.innerHTML = resultList;
   } else {
-    searchResults.innerHTML = "No results found.";
+    searchResults.innerHTML = "🤔 No results found.<br>💡 Try adding * to your search queue ";
   }
 }
 
@@ -45,6 +45,8 @@ if (query) {
       });
     }
   });
+
+  console.log(idx.toJSON());
 
   // Perform the search
   const results = idx.search(query);

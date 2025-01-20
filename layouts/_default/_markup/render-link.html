@@ -1,0 +1,7 @@
+<a href="{{ .Destination }}" 
+    {{ with .Title }} title="{{ . }}" {{ end }} 
+    {{ if strings.HasPrefix .Destination "http" }} class="external-link" {{ end }}>
+    {{ .Text }}
+</a>
+
+<!-- {{ if strings.HasPrefix .Destination "http" }} target="_blank" {{ end }}> -->

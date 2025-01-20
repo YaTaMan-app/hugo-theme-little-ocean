@@ -25,12 +25,15 @@ function unstackNotes(level) {
 }
 
 function updateLinkStatuses() {
+  console.log(`updateLinkStatuses - pages: ${JSON.stringify(pages, null, 2)}`);
   links = Array.prototype.slice.call(document.querySelectorAll("a"));
-  links.forEach(function (e) {
-    if (pages.indexOf(e.getAttribute("href")) > -1) {
-      e.classList.add("active");
+  links.forEach(function (link) {
+    console.log(`updateLinkStatuses - link: ${link}`);
+
+    if (pages.indexOf(link.getAttribute("href")) > -1) {
+      if(!link.id.contains('logo-and-title'))link.classList.add("active");
     } else {
-      e.classList.remove("active");
+      link.classList.remove("active");
     }
   });
 }
@@ -90,6 +93,8 @@ function initializePage(page, level) {
   links.forEach(async function (element) {
     var rawHref = element.getAttribute("href");
     element.dataset.level = level;
+    var ignoreLocalPaths = ['/search/'];
+
 
     if (
       rawHref &&
@@ -100,7 +105,9 @@ function initializePage(page, level) {
           rawHref.indexOf("https://") === 0 ||
           rawHref.indexOf("#") === 0 ||
           rawHref.includes(".pdf") ||
-          rawHref.includes(".svg")
+          rawHref.includes(".svg") ||
+          // Ignore certain paths from opening on a side panel
+          ignoreLocalPaths.reduce((acc, path) => acc || rawHref.includes(path), false) 
         )
       )
     ) {
@@ -161,6 +168,7 @@ document.getElementsByTagName('body')[0].appendChild(previewContainer1);
  * @param {HTMLElement} anchorElement 
  */
 function showPreview(previewHtml, anchorElement) {
+  // console.log(`showPreview: previewHtml ${JSON.stringify(previewHtml, null, 2)}; anchorElement ${JSON.stringify(anchorElement, null, 2)}`);
   let fragment = document.createElement("template");
   fragment.innerHTML = previewHtml;
   let element = fragment.content.querySelector(".page");
@@ -242,6 +250,24 @@ function hidePreview() {
 window.addEventListener("popstate", function (event) {
   // TODO: check state and pop pages if possible, rather than reloading.
   window.location = window.location; // this reloads the page.
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const baseHost = window.location.hostname;
+  const links = document.querySelectorAll("a");
+
+  links.forEach(link => {
+    try {
+      const url = new URL(link.href);
+      if (url.hostname !== baseHost) {
+        link.classList.add("external-link");
+        // link.setAttribute("rel", "noopener noreferrer");
+      }
+    } catch (e) {
+      // Ignore invalid URLs
+      console.error(e);
+    }
+  });
 });
 
 window.onload = function () {
