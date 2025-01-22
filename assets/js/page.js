@@ -3,7 +3,7 @@ let switchDirectionWindowWidth = 900;
 let animationLength = 200;
 
 function stackNote(href, level) {
-  // console.log(`stackNote href ${href} at level ${level}`);
+  console.log(`stackNote href ${href} at level ${level}`);
   level = Number(level) || pages.length;
   href = URI(href);
   uri = URI(window.location);
@@ -16,7 +16,7 @@ function stackNote(href, level) {
 }
 
 function unstackNotes(level) {
-  // console.log(`unstackNote at level ${level}`);
+  console.log(`unstackNote at level ${level}`);
   let container = document.querySelector(".grid");
   let children = Array.prototype.slice.call(container.children);
 
@@ -27,7 +27,7 @@ function unstackNotes(level) {
 }
 
 function updateLinkStatuses() {
-  // console.log(`updateLinkStatuses - pages: ${JSON.stringify(pages, null, 2)}`);
+  console.log(`updateLinkStatuses - pages: ${JSON.stringify(pages, null, 2)}`);
   links = Array.prototype.slice.call(document.querySelectorAll("a"));
   links.forEach(function (link) {
     // console.log(`updateLinkStatuses - link: ${link}`);
@@ -76,7 +76,7 @@ function insertNote(href, text, level) {
  * @param {number} level 
  */
 function fetchNote(href, level) {
-  // console.log(`fetchNote ${href} at level ${level}`);
+  console.log(`fetchNote ${href} at level ${level}`);
   if (pages.indexOf(href) > -1) return;
   level = Number(level) || pages.length;
 
@@ -89,7 +89,7 @@ function fetchNote(href, level) {
 }
 
 function initializePage(page, level) {
-  // console.log(`initializePage ${JSON.stringify(page, null, 2)} at level ${level}`);
+  console.log(`initializePage ${JSON.stringify(page, null, 2)} at level ${level}`);
 
   level = level || pages.length;
 
@@ -175,7 +175,7 @@ document.getElementsByTagName('body')[0].appendChild(previewContainer1);
  * @param {HTMLElement} anchorElement 
  */
 function showPreview(previewHtml, anchorElement) {
-  // console.log(`showPreview: previewHtml ${JSON.stringify(previewHtml, null, 2)}; anchorElement ${JSON.stringify(anchorElement, null, 2)}`);
+  console.log(`showPreview: previewHtml ${JSON.stringify(previewHtml, null, 2)}; anchorElement ${JSON.stringify(anchorElement, null, 2)}`);
   let fragment = document.createElement("template");
   fragment.innerHTML = previewHtml;
   let element = fragment.content.querySelector(".page");

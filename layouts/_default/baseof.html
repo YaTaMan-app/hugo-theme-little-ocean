@@ -7,4 +7,12 @@
     {{- partial "scripts.html" . -}}
     {{- partial "search-index.html" . -}}
   </body>
+  <script>
+    window.HUGO_ENV = "{{ hugo.Environment }}";
+    if (window.HUGO_ENV === "development") {
+      console.log("Development Mode: Logging enabled");
+    } else if (window.HUGO_ENV === "production") {
+      console.log = function () {}; // Disable logging in production
+    }
+  </script>
 </html>
