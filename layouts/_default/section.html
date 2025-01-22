@@ -4,7 +4,8 @@
     <div class="page">
       <div class="content">
         <h1>{{.Title}}</h1>
-        {{ range .Pages }}
+        {{ .Content }}
+        {{ range .Pages.ByTitle }}
         <li><a href="{{.RelPermalink}}">{{.Title}}</a></li>
         {{ end }}
         <p class="last-updated">

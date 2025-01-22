@@ -10,7 +10,7 @@
         safeHTML }}
         <hr>
         <ul class="pages-list">
-        {{ range .Data.Pages }}
+        {{ range where .Data.Pages.ByTitle "Type" "!=" "search" }}
           <li>
             <a href="{{ .RelPermalink }}">{{ .Title }}</a> -
             <time>{{ .Date.Format "2006-01-02" }}</time> -
