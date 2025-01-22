@@ -94,15 +94,10 @@ function initializePage(page, level) {
   level = level || pages.length;
 
   links = Array.prototype.slice.call(page.querySelectorAll("a")) || [];
-  if (links.length == 0) { updateLinkStatuses(); return; }
-
-  links.forEach(async function (element) {
-    var rawHref = element.getAttribute("href");
-    element.dataset.level = level;
+  var internalLinks = links.filter((link) => {
+    var rawHref = link.getAttribute("href");
     var ignoreLocalPaths = ['/search/'];
-
-    if (
-      rawHref &&
+    return rawHref &&
       !(
         // Internal Links Only
         (
@@ -115,36 +110,39 @@ function initializePage(page, level) {
           ignoreLocalPaths.reduce((acc, path) => acc || rawHref.includes(path), false)
         )
       )
-    ) {
-      var prefetchLink = element.href;
-      async function myFetch() {
-        // console.log(`myFetch ${prefetchLink}`);
+  });
+  if (internalLinks.length == 0) { updateLinkStatuses(); return; }
 
-        let response = await fetch(prefetchLink);
-        let text = await response.text();
-        let ct = await response.headers.get("content-type");
-        if (ct.includes("text/html")) {
-          // Click to open
-          element.addEventListener("click", function (e) {
-            if (!e.ctrlKey && !e.metaKey) {
-              e.preventDefault();
-              insertNote(element.getAttribute("href"), text, this.dataset.level);
-              hidePreview();
-            }
-          });
+  internalLinks.forEach(async function (link) {
+    link.dataset.level = level;
+    var prefetchLink = link.href;
+    async function myFetch() {
+      console.log(`myFetch ${prefetchLink}`);
 
-          // Hover to see preview
-          element.addEventListener("mouseenter", function (e) {
-            showPreview(text, element);
-          });
-          element.addEventListener("mouseleave", function (e) {
+      let response = await fetch(prefetchLink);
+      let text = await response.text();
+      let ct = await response.headers.get("content-type");
+      if (ct.includes("text/html")) {
+        // Click to open
+        link.addEventListener("click", function (e) {
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            insertNote(link.getAttribute("href"), text, this.dataset.level);
             hidePreview();
-          });
-        }
-        updateLinkStatuses();
+          }
+        });
+
+        // Hover to see preview
+        link.addEventListener("mouseenter", function (e) {
+          showPreview(text, link);
+        });
+        link.addEventListener("mouseleave", function (e) {
+          hidePreview();
+        });
       }
-      return myFetch();
+      updateLinkStatuses();
     }
+    return myFetch();
   });
 }
 
