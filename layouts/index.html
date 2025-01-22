@@ -4,19 +4,29 @@
     <div class="page" data-level="1">
       <div class="content">
         <h1>{{ .Title | default "Index"}}</h1>
-        {{ .Content | 
-          replaceRE `\[\[([^|\]]+)\|([^|\]]+)\]\]` `<a href='/$1/'>$2</a>` | 
-          replaceRE `\[\[([^\]]+)\]\]` `<a href='/$1/'>$1</a>` | 
-          safeHTML }}
+        {{ .Content |
+        replaceRE `\[\[([^|\]]+)\|([^|\]]+)\]\]` `<a href='/$1/'>$2</a>` |
+        replaceRE `\[\[([^\]]+)\]\]` `<a href='/$1/'>$1</a>` |
+        safeHTML }}
+        <hr>
+        <ul class="pages-list">
+        {{ range .Data.Pages }}
+          <li>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a> -
+            <time>{{ .Date.Format "2006-01-02" }}</time> -
+            {{ .Data.Pages }}
+          </li>
+          {{ end }}
+        </ul>
+        <p class="last-updated">
+          Last updated:
+          {{ if .Lastmod }}
+          {{ .Lastmod.Format "2006-01-02" }}
+          {{ else }}
+          {{ .Date.Format "2006-01-02" }}
+          {{ end }}
+        </p>
       </div>
-      <hr>
-      {{ range .Data.Pages }}
-      <li>
-        <a href="{{ .RelPermalink }}">{{ .Title }}</a> - 
-        <time>{{ .Date.Format "2006-01-02" }}</time> - 
-        {{ .Data.Pages }}
-      </li>
-      {{ end }}
     </div>
   </div>
 </div>

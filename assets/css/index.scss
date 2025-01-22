@@ -213,6 +213,10 @@ body {
   color: var(--color);
 }
 
+ul.pages-list {
+  padding-left: 0px;
+}
+
 p,
 li {
   font-size: var(--page-font-size);
@@ -355,6 +359,16 @@ blockquote {
   border-left-color: currentcolor;
   border-color: var(--text-color);
   padding-left: 1em;
+}
+
+p.last-updated {
+  // font-size: 0.9em;
+  // color: #666;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 500;
+  color: #aaa;
+  margin-top: 2em;
 }
 
 pre {

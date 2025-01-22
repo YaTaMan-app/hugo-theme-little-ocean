@@ -7,6 +7,14 @@
         {{ range .Pages }}
         <li><a href="{{.RelPermalink}}">{{.Title}}</a></li>
         {{ end }}
+        <p class="last-updated">
+          Last updated: 
+          {{ if .Lastmod }}
+            {{ .Lastmod.Format "2006-01-02" }}
+          {{ else }}
+            {{ .Date.Format "2006-01-02" }}
+          {{ end }}
+        </p>
       </div>
     </div>
   </div>
