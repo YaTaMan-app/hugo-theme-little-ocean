@@ -3,18 +3,18 @@
 
 name = "Little Ocean"
 license = "MIT"
-licenselink = "https://github.com/justindsmith/little-ocean/blob/main/LICENSE"
+licenselink = "https://github.com/YaTaMan-app/hugo-theme-little-ocean/blob/main/LICENSE"
 description = "Theme for knowledge graph notes."
-homepage = "https://github.com/justindsmith/little-ocean"
+homepage = "https://github.com/YaTaMan-app/hugo-theme-little-ocean"
 tags = ['knowledge-graph', 'notes', 'second-brain']
 features = []
 min_version = "0.41"
 
 [author]
-  name = "Justin Smith"
-  homepage = "https://justindsmith.me"
+  name = "Dmytro Shulha"
+  homepage = https://github.com/YaTaMan-app/hugo-theme-little-ocean
 
 [original]
-  author = "Jethro Kuan"
-  homepage = "https://blog.jethro.dev/"
-  repo = "https://github.com/jethrokuan/cortex"
+  author = "Justin Smith"
+  homepage = "https://justindsmith.me"
+  repo = "https://github.com/justindsmith/little-ocean"
