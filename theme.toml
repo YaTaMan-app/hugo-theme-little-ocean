@@ -12,7 +12,7 @@ min_version = "0.41"
 
 [author]
   name = "Dmytro Shulha"
-  homepage = https://github.com/YaTaMan-app/hugo-theme-little-ocean
+  homepage = "https://github.com/YaTaMan-app/hugo-theme-little-ocean"
 
 [original]
   author = "Justin Smith"
