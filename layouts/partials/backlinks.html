@@ -1,12 +1,13 @@
 {{ $re := printf `(?i)\n?.*\[%s\].*\n?` .Title }}
 {{ $backlinks := slice }}
 {{ $currentBaseFileName := $.File.BaseFileName }}
+{{/*  <h1>{{$currentBaseFileName}}</h1>  */}}
 {{ range .Site.AllPages }}
+  {{/*  <p>{{ findRE $re .RawContent }}</p>  */}}
    {{ if and (findRE $re .RawContent) (not (eq $currentBaseFileName .File.BaseFileName)) }}
       {{ $backlinks = $backlinks | append . }}
    {{ end }}
 {{ end }}
-
 {{ if gt (len $backlinks) 0 }}
   <div class="bl-section">
     <h4>Links to this note</h4>
